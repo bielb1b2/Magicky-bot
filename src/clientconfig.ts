@@ -3,8 +3,9 @@ import { Client, Events, GatewayIntentBits } from 'discord.js'
 import fs from 'fs';
 
 // Configurations
-import CONFIGBOT from './configbot.json';
+import CONFIGBOT from './config/configbot.json';
 import { ICommands } from './commands/interface/ICommands';
+import infoCommand from './infoCommand';
 
 const client = new Client({ 
 	intents: [
@@ -24,8 +25,6 @@ for (const file of commandFiles) {
     commands.push(command);
 }
 
-console.log(commands)
-
 client.on(Events.ClientReady, readyClients => {
     console.log(`Logged in as ${readyClients.user.tag}!`);
 })
@@ -35,6 +34,11 @@ client.on(Events.MessageCreate, interaction => {
     if(interaction.author.bot) return;
 
     const commandName = interaction.content.slice(CONFIGBOT.prefix.length).trim().split(/ +/)[0];
+
+    if(commandName === 'info') { 
+        infoCommand.execute(interaction, interaction.content.slice(CONFIGBOT.prefix.length).trim().split(/ +/).slice(1), commands);
+        return;
+    }
 
     const command = commands.find(command => command.name === commandName);
     if(!command) {
