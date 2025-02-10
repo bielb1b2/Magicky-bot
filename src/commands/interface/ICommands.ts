@@ -4,5 +4,5 @@ export type ICommands = {
     name: string,
     description: string,
     howUse: string,
-    execute<T>(interaction: OmitPartialGroupDMChannel<Message<boolean>>, args: any): T
+    execute<T>(interaction: OmitPartialGroupDMChannel<Message<boolean>>, args: string[]): T
 }

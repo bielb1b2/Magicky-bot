@@ -1,8 +1,7 @@
-// Dependencies
 import { Client, Events, GatewayIntentBits } from 'discord.js'
 import fs from 'fs';
+import path from 'path';
 
-// Configurations
 import CONFIGBOT from './config/configbot.json';
 import { ICommands } from './commands/interface/ICommands';
 import infoCommand from './infoCommand';
@@ -18,7 +17,13 @@ const client = new Client({
 
 const commands: ICommands[] = []
 
-const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.ts'));
+const commandFiles = fs.readdirSync('./src/commands').flatMap(dir => {
+    const fullPath = path.join('./src/commands', dir);
+    if (fs.statSync(fullPath).isDirectory()) {
+        return fs.readdirSync(fullPath).map(file => path.join(dir, file));
+    }
+    return [dir];
+}).filter(file => file.endsWith('.command.ts'));
 
 for (const file of commandFiles) {
     const command: ICommands = require(`./commands/${file}`);
@@ -29,7 +34,7 @@ client.on(Events.ClientReady, readyClients => {
     console.log(`Logged in as ${readyClients.user.tag}!`);
 })
 
-client.on(Events.MessageCreate, interaction => {
+client.on(Events.MessageCreate, async interaction => {
     if(!interaction.content.startsWith(CONFIGBOT.prefix)) return;
     if(interaction.author.bot) return;
 
@@ -46,7 +51,9 @@ client.on(Events.MessageCreate, interaction => {
         return;
     }
 
-    command.execute(interaction, interaction.content.slice(CONFIGBOT.prefix.length).trim().split(/ +/).slice(1));
+    const args = interaction.content.slice(CONFIGBOT.prefix.length).trim().match(/(?:[^\s"]+|"[^"]*")+/g)?.slice(1).map(arg => arg.replace(/['"]+/g, '')) || []
+
+    await command.execute(interaction, args);
 })
 
 export { client }
