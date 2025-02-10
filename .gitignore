@@ -1,0 +1,8 @@
+# Directories
+/node_modules
+/dist
+
+# environments
+.env.development
+.env.production
+.env.local
