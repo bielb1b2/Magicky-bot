@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits } from 'discord.js'
+import { Client, Events, GatewayIntentBits, TextChannel } from 'discord.js'
 import fs from 'fs';
 import path from 'path';
 
@@ -30,7 +30,7 @@ for (const file of commandFiles) {
     commands.push(command);
 }
 
-client.on(Events.ClientReady, readyClients => {
+client.on(Events.ClientReady, async readyClients => {
     console.log(`Logged in as ${readyClients.user.tag}!`);
 })
 
@@ -55,5 +55,7 @@ client.on(Events.MessageCreate, async interaction => {
 
     await command.execute(interaction, args);
 })
+
+
 
 export { client }
