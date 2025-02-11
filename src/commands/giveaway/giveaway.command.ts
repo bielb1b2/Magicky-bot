@@ -1,5 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from "@discordjs/builders";
-import { ButtonStyle, Events } from "discord.js";
+import { ButtonStyle, Events, MessageFlags } from "discord.js";
 import { z } from "zod";
 import { DateTime } from "luxon";
 
@@ -100,20 +100,28 @@ client.on(Events.InteractionCreate, async interaction => {
 
         const giveaway = registeredDraws.find(draw => draw.id === interaction.message.id);
         if(!giveaway) {
-            await interaction.reply({ content: "Giveaway not found", ephemeral: true  })
+            await interaction.reply({ content: "Giveaway not found", flags: MessageFlags.Ephemeral  })
             return;
         }
 
         const userIsAlreadyInEvent = giveaway.giveawayInfo.participants.find(item => item === userId);
         if(userIsAlreadyInEvent) {
-            await interaction.reply({ content: "You're already in event", ephemeral: true  })
+            await interaction.reply({ content: "You're already in event", flags: MessageFlags.Ephemeral  })
             return;
         }
 
+        const joinButtonUpdated = new ButtonBuilder()
+            .setCustomId('giveaway-button')
+            .setLabel(`Participate (${giveaway.giveawayInfo.participants.length + 1})`)
+            .setStyle(ButtonStyle.Primary)
+
+        const row = new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(joinButtonUpdated);
+
+
         giveaway.giveawayInfo.participants.push(userId);
 
-        await interaction.reply({ content: "Now you are in the event", ephemeral: true });
+        await interaction.message.edit({ components: [row] })
+        await interaction.reply({ content: "Now you are in the event", flags: MessageFlags.Ephemeral });
     }
-
-    console.log(registeredDraws)
 })
