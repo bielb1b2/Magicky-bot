@@ -46,7 +46,7 @@ export = {
             hour: parseInt(giveawayConfig.hourOfExecute),
         })
 
-        if(executionDate < DateTime.now().setZone('America/Sao_Paulo') || !executionDate.isValid) {
+        if(executionDate < DateTime.now().setZone('America/Sao_Paulo').set({ minute: 0, second: 0, millisecond: 0 }) || !executionDate.isValid) {
             interaction.reply('Invalid date');
             return;
         }
@@ -85,7 +85,7 @@ export = {
                 title: giveawayConfig.title,
                 description: giveawayConfig.description,
                 winners: giveawayConfig.winners,
-                executionDate: executionDate.toISODate(),
+                executionDate: executionDate.toISO(),
                 participants: [],
             }
         })

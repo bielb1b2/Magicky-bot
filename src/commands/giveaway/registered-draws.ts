@@ -1,4 +1,4 @@
-interface IRegisteredDraws {
+export interface IRegisteredDraws {
     id: string,
     guildInfo: {
         guildId: string,

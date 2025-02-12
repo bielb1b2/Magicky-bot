@@ -5,6 +5,7 @@ import path from 'path';
 import CONFIGBOT from './config/configbot.json';
 import { ICommands } from './commands/interface/ICommands';
 import infoCommand from './infoCommand';
+import { cronGiveAway } from './commands/giveaway/giveaway.service';
 
 const client = new Client({ 
 	intents: [
@@ -32,6 +33,10 @@ for (const file of commandFiles) {
 
 client.on(Events.ClientReady, async readyClients => {
     console.log(`Logged in as ${readyClients.user.tag}!`);
+
+    setInterval(async () => {
+        await cronGiveAway();
+    }, 1000 * 60);
 })
 
 client.on(Events.MessageCreate, async interaction => {
