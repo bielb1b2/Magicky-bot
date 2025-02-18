@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
 import { TextChannel } from 'discord.js';
-import Lodash from 'lodash';
 
 import { IRegisteredDraws, registeredDraws } from './registered-draws'
 import { client } from '../../clientconfig';
