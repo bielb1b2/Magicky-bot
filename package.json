@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/lodash": "^4.17.15",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.13.1",
     "@types/yargs": "^17.0.33",
@@ -20,6 +21,7 @@
   "dependencies": {
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
+    "lodash": "^4.17.21",
     "luxon": "^3.5.0",
     "yargs": "^17.7.2",
     "zod": "^3.24.1"

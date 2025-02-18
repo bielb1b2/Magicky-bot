@@ -59,7 +59,7 @@ export = {
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(joinButton);
         
-        
+        console.log("Giveaway", giveawayConfig);
 
         const message = new EmbedBuilder()
             .setTitle(giveawayConfig.title)

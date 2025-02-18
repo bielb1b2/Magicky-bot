@@ -14,4 +14,4 @@ export interface IRegisteredDraws {
     }
 }
 
-export const registeredDraws: IRegisteredDraws[] = []
+export let registeredDraws: IRegisteredDraws[] = []

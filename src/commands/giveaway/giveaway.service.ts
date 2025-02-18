@@ -1,7 +1,9 @@
 import { DateTime } from 'luxon';
+import { TextChannel } from 'discord.js';
+import Lodash from 'lodash';
+
 import { IRegisteredDraws, registeredDraws } from './registered-draws'
 import { client } from '../../clientconfig';
-import { TextChannel } from 'discord.js';
 
 export async function cronGiveAway() {
     const gamesOfTheDay: IRegisteredDraws[] = [];
@@ -20,7 +22,7 @@ export async function cronGiveAway() {
         return;
     }
 
-    gamesOfTheDay.forEach(item => {
+    gamesOfTheDay.forEach((item, index) => {
         const winners: string[] = [];
         let participants = item.giveawayInfo.participants;
         if (participants.length > 0) {
@@ -39,9 +41,14 @@ export async function cronGiveAway() {
                 channel.send(`No participants for giveaway: "${item.giveawayInfo.title}"!`);
             }
         }
+
+        const drawIndex = registeredDraws.findIndex(draw => draw.id === item.id);
+        if (drawIndex !== -1) {
+            registeredDraws.splice(drawIndex, 1);
+        }
     });
 
-    registeredDraws.length = 0;
+    gamesOfTheDay.length = 0;
 }
 
 function getRandomElement<T>(array: T[]): T {
