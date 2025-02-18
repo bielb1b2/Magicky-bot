@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import { TextChannel } from 'discord.js';
+import { DateTime } from "luxon";
+import { TextChannel } from "discord.js";
 
-import { IRegisteredDraws, registeredDraws } from './registered-draws'
-import { client } from '../../clientconfig';
+import { IRegisteredDraws, registeredDraws } from "./registered-draws"
+import { client } from "../../clientconfig";
 
 export async function cronGiveAway() {
     const gamesOfTheDay: IRegisteredDraws[] = [];
@@ -21,7 +21,7 @@ export async function cronGiveAway() {
         return;
     }
 
-    gamesOfTheDay.forEach((item, index) => {
+    gamesOfTheDay.forEach((item) => {
         const winners: string[] = [];
         let participants = item.giveawayInfo.participants;
         if (participants.length > 0) {
@@ -32,7 +32,7 @@ export async function cronGiveAway() {
             }
             const channel = client.channels.cache.get(item.guildInfo.channelId) as TextChannel;
             if (channel) {
-                channel.send(`Congratulations ${winners.map(winner => `<@${winner}>`).join(', ')}! You have won the giveaway for "${item.giveawayInfo.title}"!`);
+                channel.send(`Congratulations ${winners.map(winner => `<@${winner}>`).join(", ")}! You have won the giveaway for "${item.giveawayInfo.title}"!`);
             }
         } else {
             const channel = client.channels.cache.get(item.guildInfo.channelId) as TextChannel;

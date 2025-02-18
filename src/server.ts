@@ -1,5 +1,5 @@
-import { env } from './env/index';
-import { client } from './clientconfig';
+import { env } from "./env/index";
+import { client } from "./clientconfig";
 
 if(env.error) {
     env.error.errors.forEach(item => {

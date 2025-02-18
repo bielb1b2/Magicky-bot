@@ -1,11 +1,11 @@
-import { Client, Events, GatewayIntentBits, TextChannel } from 'discord.js'
-import fs from 'fs';
-import path from 'path';
+import { Client, Events, GatewayIntentBits } from "discord.js"
+import fs from "fs";
+import path from "path";
 
-import CONFIGBOT from './config/configbot.json';
-import { ICommands } from './commands/interface/ICommands';
-import infoCommand from './infoCommand';
-import { cronGiveAway } from './commands/giveaway/giveaway.service';
+import CONFIGBOT from "./config/configbot.json";
+import { ICommands } from "./commands/interface/ICommands";
+import infoCommand from "./infoCommand";
+import { cronGiveAway } from "./commands/giveaway/giveaway.service";
 
 const client = new Client({ 
 	intents: [
@@ -18,13 +18,13 @@ const client = new Client({
 
 const commands: ICommands[] = []
 
-const commandFiles = fs.readdirSync('./src/commands').flatMap(dir => {
-    const fullPath = path.join('./src/commands', dir);
+const commandFiles = fs.readdirSync("./src/commands").flatMap(dir => {
+    const fullPath = path.join("./src/commands", dir);
     if (fs.statSync(fullPath).isDirectory()) {
         return fs.readdirSync(fullPath).map(file => path.join(dir, file));
     }
     return [dir];
-}).filter(file => file.endsWith('.command.ts'));
+}).filter(file => file.endsWith(".command.ts"));
 
 for (const file of commandFiles) {
     const command: ICommands = require(`./commands/${file}`);
@@ -45,7 +45,7 @@ client.on(Events.MessageCreate, async interaction => {
 
     const commandName = interaction.content.slice(CONFIGBOT.prefix.length).trim().split(/ +/)[0];
 
-    if(commandName === 'info') { 
+    if(commandName === "info") { 
         infoCommand.execute(interaction, interaction.content.slice(CONFIGBOT.prefix.length).trim().split(/ +/).slice(1), commands);
         return;
     }
@@ -56,7 +56,7 @@ client.on(Events.MessageCreate, async interaction => {
         return;
     }
 
-    const args = interaction.content.slice(CONFIGBOT.prefix.length).trim().match(/(?:[^\s"]+|"[^"]*")+/g)?.slice(1).map(arg => arg.replace(/['"]+/g, '')) || []
+    const args = interaction.content.slice(CONFIGBOT.prefix.length).trim().match(/(?:[^\s"]+|"[^"]*")+/g)?.slice(1).map(arg => arg.replace(/['"]+/g, "")) || []
 
     await command.execute(interaction, args);
 })

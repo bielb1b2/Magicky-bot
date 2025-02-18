@@ -4,7 +4,7 @@ import { z } from "zod";
 import { DateTime } from "luxon";
 
 import { ICommands } from "../interface/ICommands";
-import { registeredDraws } from './registered-draws';
+import { registeredDraws } from "./registered-draws";
 import { client } from "../../clientconfig";
 
 const giveawaySchema = z.object({
@@ -19,9 +19,9 @@ const giveawaySchema = z.object({
 type giveawaySchemaType = z.infer<typeof giveawaySchema>;
 
 export = {
-    name: 'giveaway',
-    description: 'giveaway!',
-    howUse: '!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>',
+    name: "giveaway",
+    description: "giveaway!",
+    howUse: "!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>",
     async execute(interaction, args) {
         const giveawayConfig: giveawaySchemaType = {
             title: args[0],
@@ -46,14 +46,14 @@ export = {
             hour: parseInt(giveawayConfig.hourOfExecute),
         })
 
-        if(executionDate < DateTime.now().setZone('America/Sao_Paulo').set({ minute: 0, second: 0, millisecond: 0 }) || !executionDate.isValid) {
-            interaction.reply('Invalid date');
+        if(executionDate < DateTime.now().setZone("America/Sao_Paulo").set({ minute: 0, second: 0, millisecond: 0 }) || !executionDate.isValid) {
+            interaction.reply("Invalid date");
             return;
         }
 
         const joinButton = new ButtonBuilder()
-            .setCustomId('giveaway-button')
-            .setLabel('Participate')
+            .setCustomId("giveaway-button")
+            .setLabel("Participate")
             .setStyle(ButtonStyle.Primary)
         
         const row = new ActionRowBuilder<ButtonBuilder>()
@@ -65,8 +65,8 @@ export = {
             .setTitle(giveawayConfig.title)
             .setDescription(giveawayConfig.description)
             .addFields([
-                { name: 'Winners', value: giveawayConfig.winners, inline: true },
-                { name: 'Execution Date', value: executionDate.toISODate(), inline: true },
+                { name: "Winners", value: giveawayConfig.winners, inline: true },
+                { name: "Execution Date", value: executionDate.toISODate(), inline: true },
             ])
 
         const response = await interaction.channel.send({ 
@@ -95,7 +95,7 @@ export = {
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;
 
-    if (interaction.customId === 'giveaway-button') {
+    if (interaction.customId === "giveaway-button") {
         const userId = interaction.user.id;
 
         const giveaway = registeredDraws.find(draw => draw.id === interaction.message.id);
@@ -111,7 +111,7 @@ client.on(Events.InteractionCreate, async interaction => {
         }
 
         const joinButtonUpdated = new ButtonBuilder()
-            .setCustomId('giveaway-button')
+            .setCustomId("giveaway-button")
             .setLabel(`Participate (${giveaway.giveawayInfo.participants.length + 1})`)
             .setStyle(ButtonStyle.Primary)
 
