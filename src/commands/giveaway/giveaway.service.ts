@@ -1,8 +1,9 @@
 import { DateTime } from "luxon";
-import { TextChannel } from "discord.js";
+import { EmbedBuilder, TextChannel } from "discord.js";
 
 import { IRegisteredDraws, registeredDraws } from "./registered-draws"
 import { client } from "../../clientconfig";
+import configBot from "../../config/configbot.json";
 
 export async function cronGiveAway() {
     const gamesOfTheDay: IRegisteredDraws[] = [];
@@ -32,7 +33,26 @@ export async function cronGiveAway() {
             }
             const channel = client.channels.cache.get(item.guildInfo.channelId) as TextChannel;
             if (channel) {
-                channel.send(`Congratulations ${winners.map(winner => `<@${winner}>`).join(", ")}! You have won the giveaway for "${item.giveawayInfo.title}"!`);
+
+                const winnerEmbed = new EmbedBuilder()
+                    .setColor("#7FDFFF")
+                    .setTitle(item.giveawayInfo.title)
+                    .setDescription(item.giveawayInfo.description)
+                    .setThumbnail(configBot.urlPhoto)
+                    .addFields(
+                        { name: "Schedule execute", value: DateTime.now().toFormat("dd LLL yyyy"), inline: true },
+                        { name: "Players", value: "Winner(s)" },
+                    )
+
+                winners.map((winner, index) => {
+                    winnerEmbed.addFields(
+                        { name: `Winner ${index + 1}`, value: `<@${winner}>` }
+                    )
+                })
+
+                channel.send({
+                    embeds: [winnerEmbed]
+                });
             }
         } else {
             const channel = client.channels.cache.get(item.guildInfo.channelId) as TextChannel;

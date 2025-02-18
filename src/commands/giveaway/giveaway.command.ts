@@ -8,8 +8,8 @@ import { registeredDraws } from "./registered-draws";
 import { client } from "../../clientconfig";
 
 const giveawaySchema = z.object({
-    title: z.string(),
-    description: z.string(),
+    title: z.string().max(100),
+    description: z.string().max(10000),
     winners: z.string(),
     dayOfExecute: z.string(),
     monthOfExecute: z.string(),
