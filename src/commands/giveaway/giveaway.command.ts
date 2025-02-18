@@ -23,6 +23,11 @@ export = {
     description: "giveaway!",
     howUse: "!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>",
     async execute(interaction, args) {
+        if(!args) {
+            interaction.reply("This command need arguments")
+            return;
+        }
+
         const giveawayConfig: giveawaySchemaType = {
             title: args[0],
             description: args[1],

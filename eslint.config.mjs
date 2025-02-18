@@ -14,6 +14,7 @@ export default tseslint.config(
   tseslint.configs.recommended,
   {
     rules: {
+      "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-require-imports": "off",
       "quotes": ["error", "double"]
     }
