@@ -1,22 +1,30 @@
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from "@discordjs/builders";
-import { ButtonStyle, Events, MessageFlags } from "discord.js";
+import { ButtonStyle, Colors, Events, MessageFlags } from "discord.js";
 import { z } from "zod";
 import { DateTime } from "luxon";
 
 import { ICommands } from "../interface/ICommands";
 import { registeredDraws } from "./registered-draws";
 import { client } from "../../clientconfig";
+import { messageEmbedError } from "./errors/invalidArgs.error";
+
+interface IGiveawayArguments {
+    title: string;
+    description: string;
+    winners: string;
+    dayOfExecute: string;
+    monthOfExecute: string;
+    hourOfExecute: string;
+}
 
 const giveawaySchema = z.object({
     title: z.string().max(100),
     description: z.string().max(10000),
-    winners: z.string(),
+    winners: z.coerce.number().max(10).min(1),
     dayOfExecute: z.string(),
     monthOfExecute: z.string(),
     hourOfExecute: z.string(),
 });
-
-type giveawaySchemaType = z.infer<typeof giveawaySchema>;
 
 export = {
     name: "giveaway",
@@ -28,7 +36,7 @@ export = {
             return;
         }
 
-        const giveawayConfig: giveawaySchemaType = {
+        const giveawayConfig: IGiveawayArguments = {
             title: args[0],
             description: args[1],
             winners: args[2],
@@ -40,7 +48,9 @@ export = {
         const parse = giveawaySchema.safeParse(giveawayConfig);
 
         if(!parse.data) {
-            interaction.reply(`Info command: \`${this.howUse}\``);
+            const errorEmbedMessage = messageEmbedError(parse)
+            
+            interaction.reply({ embeds: [errorEmbedMessage] });
             return;
         }
 
@@ -64,8 +74,6 @@ export = {
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(joinButton);
         
-        console.log("Giveaway", giveawayConfig);
-
         const message = new EmbedBuilder()
             .setTitle(giveawayConfig.title)
             .setDescription(giveawayConfig.description)

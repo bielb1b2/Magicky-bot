@@ -28,7 +28,11 @@ export async function cronGiveAway() {
         if (participants.length > 0) {
             for (let index = 0; index < Number(item.giveawayInfo.winners); index++) {
                 const winner = getRandomElement(participants);
-                winners.push(winner);
+                if(winner === undefined) {
+                    winners.push("Ins. Participants")
+                } else {
+                    winners.push(`${winner}`);
+                }
                 participants = participants.filter(participant => participant !== winner);
             }
             const channel = client.channels.cache.get(item.guildInfo.channelId) as TextChannel;
@@ -40,13 +44,14 @@ export async function cronGiveAway() {
                     .setDescription(item.giveawayInfo.description)
                     .setThumbnail(configBot.urlPhoto)
                     .addFields(
-                        { name: "Schedule execute", value: DateTime.now().toFormat("dd LLL yyyy"), inline: true },
-                        { name: "Players", value: "Winner(s)" },
+                        { name: "Schedule execute", value: DateTime.now().toFormat("dd LLL yyyy") },
+                        { name: "\u200B", value: "\u200B" },
+
                     )
 
                 winners.map((winner, index) => {
                     winnerEmbed.addFields(
-                        { name: `Winner ${index + 1}`, value: `<@${winner}>` }
+                        { name: `Winner ${index + 1}`, value: `<@${winner}>`, inline: true }
                     )
                 })
 
