@@ -16,6 +16,8 @@ const client = new Client({
 	],
 });
 
+
+// Old format
 const commands: ICommands[] = []
 
 const commandFiles = fs.readdirSync("./src/commands").flatMap(dir => {

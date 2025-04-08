@@ -7,9 +7,7 @@ export function messageEmbedError(parse: z.SafeParseError<unknown>): EmbedBuilde
         .setTitle("Error")
         .setDescription("Invalid Args")
 
-    console.log(parse);
-
-    parse.error.errors.forEach((errorArg, index) => {
+    parse.error.errors.forEach((errorArg) => {
         messageError.addFields([
             { name: `[${errorArg.path[0].toString()}]`, value: errorArg.message }
         ])

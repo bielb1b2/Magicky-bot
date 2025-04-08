@@ -1,5 +1,5 @@
 import { ICommands } from "./commands/interface/ICommands";
-import { Message, OmitPartialGroupDMChannel } from "discord.js"
+import { Colors, EmbedBuilder, Message, OmitPartialGroupDMChannel } from "discord.js"
 
 export = {
     name: "info",
@@ -8,7 +8,14 @@ export = {
     execute(interaction: OmitPartialGroupDMChannel<Message<boolean>>, args: string[], commands: ICommands[]) {
         if(args.length === 0) {
             const commandList = commands.map((command: ICommands) => command.name).join("\n");
-            interaction.reply(`List of commands: \n${commandList}`);
+            const embedMessage = new EmbedBuilder()
+                .setTitle("All Commands")
+                .setColor(Colors.Aqua)
+                .addFields({
+                    name: "Commands", value: commandList
+                })
+
+            interaction.reply({ embeds: [embedMessage] });
         } else {
             const command = commands.find((command: ICommands) => command.name === args[0]);
             if(command) {
