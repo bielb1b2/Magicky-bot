@@ -1,6 +1,8 @@
 import { env } from "./env/index";
 import { client } from "./clientconfig";
 
+import "../src/commands/giveaway/giveaway.client";
+
 if(env.error) {
     env.error.errors.forEach(item => {
         console.error(item.message)

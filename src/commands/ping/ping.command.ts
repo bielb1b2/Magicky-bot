@@ -1,7 +1,7 @@
 import { Colors, EmbedBuilder } from "discord.js";
-import { ICommands } from "../interface/ICommands";
+import { ICommands } from "../../interface/ICommands";
 
-exports = {
+const ping = {
     name: "ping",
     description: "Ping!",
     howUse: "!ping",
@@ -18,3 +18,5 @@ exports = {
         interaction.reply({ embeds: [message] });
     },
 } as ICommands;
+
+export { ping };

@@ -1,9 +1,9 @@
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from "@discordjs/builders";
-import { ButtonStyle, Colors, Events, MessageFlags } from "discord.js";
+import { ButtonStyle, Events, MessageFlags } from "discord.js";
 import { z } from "zod";
 import { DateTime } from "luxon";
 
-import { ICommands } from "../interface/ICommands";
+import { ICommands } from "../../interface/ICommands";
 import { registeredDraws } from "./registered-draws";
 import { client } from "../../clientconfig";
 import { messageEmbedError } from "./errors/invalidArgs.error";
@@ -26,7 +26,7 @@ const giveawaySchema = z.object({
     hourOfExecute: z.string(),
 });
 
-exports = {
+export const giveawayCommand = {
     name: "giveaway",
     description: "giveaway!",
     howUse: "!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>",
@@ -104,37 +104,3 @@ exports = {
         })
     }
 } as ICommands;
-
-client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isButton()) return;
-
-    if (interaction.customId === "giveaway-button") {
-        const userId = interaction.user.id;
-
-        const giveaway = registeredDraws.find(draw => draw.id === interaction.message.id);
-        if(!giveaway) {
-            await interaction.reply({ content: "Giveaway not found", flags: MessageFlags.Ephemeral  })
-            return;
-        }
-
-        const userIsAlreadyInEvent = giveaway.giveawayInfo.participants.find(item => item === userId);
-        if(userIsAlreadyInEvent) {
-            await interaction.reply({ content: "You're already in event", flags: MessageFlags.Ephemeral  })
-            return;
-        }
-
-        const joinButtonUpdated = new ButtonBuilder()
-            .setCustomId("giveaway-button")
-            .setLabel(`Participate (${giveaway.giveawayInfo.participants.length + 1})`)
-            .setStyle(ButtonStyle.Primary)
-
-        const row = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(joinButtonUpdated);
-
-
-        giveaway.giveawayInfo.participants.push(userId);
-
-        await interaction.message.edit({ components: [row] })
-        await interaction.reply({ content: "Now you are in the event", flags: MessageFlags.Ephemeral });
-    }
-})

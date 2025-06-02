@@ -1,7 +1,7 @@
-import { ICommands } from "./commands/interface/ICommands";
+import { ICommands } from "../../interface/ICommands";
 import { Colors, EmbedBuilder, Message, OmitPartialGroupDMChannel } from "discord.js"
 
-export const infoCommand: ICommands = {
+export const infoCommand = {
     name: "info",
     description: "Obtain information about all commands in this bot",
     howUse: "!info [command] or !info",
@@ -25,4 +25,4 @@ export const infoCommand: ICommands = {
             }
         }
     }
-} as ICommands;
+}
