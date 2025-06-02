@@ -26,7 +26,7 @@ const giveawaySchema = z.object({
     hourOfExecute: z.string(),
 });
 
-export = {
+exports = {
     name: "giveaway",
     description: "giveaway!",
     howUse: "!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>",

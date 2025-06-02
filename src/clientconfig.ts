@@ -1,11 +1,15 @@
 import { Client, Events, GatewayIntentBits } from "discord.js"
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import CONFIGBOT from "./config/configbot.json";
 import { ICommands } from "./commands/interface/ICommands";
-import infoCommand from "./infoCommand";
+import { infoCommand } from "./infoCommand";
 import { cronGiveAway } from "./commands/giveaway/giveaway.service";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const client = new Client({ 
 	intents: [
@@ -16,12 +20,11 @@ const client = new Client({
 	],
 });
 
+const commandsPath = path.join(__dirname, "commands");
+const commands: ICommands[] = [];
 
-// Old format
-const commands: ICommands[] = []
-
-const commandFiles = fs.readdirSync("./src/commands").flatMap(dir => {
-    const fullPath = path.join("./src/commands", dir);
+const commandFiles = fs.readdirSync(commandsPath).flatMap(dir => {
+    const fullPath = path.join(commandsPath, dir);
     if (fs.statSync(fullPath).isDirectory()) {
         return fs.readdirSync(fullPath).map(file => path.join(dir, file));
     }
@@ -29,7 +32,7 @@ const commandFiles = fs.readdirSync("./src/commands").flatMap(dir => {
 }).filter(file => file.endsWith(".command.ts"));
 
 for (const file of commandFiles) {
-    const command: ICommands = require(`./commands/${file}`);
+    const command: ICommands = require(path.join(commandsPath, file));
     commands.push(command);
 }
 

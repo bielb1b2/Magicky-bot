@@ -1,7 +1,7 @@
 import { Colors, EmbedBuilder } from "discord.js";
 import { ICommands } from "../interface/ICommands";
 
-export = {
+exports = {
     name: "ping",
     description: "Ping!",
     howUse: "!ping",
