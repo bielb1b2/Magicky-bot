@@ -36,6 +36,11 @@ export const giveawayCommand: ICommands = {
             return;
         }
 
+        if(registeredDraws.find(draw => draw.guildInfo.guildId === interaction.guildId)) {
+            interaction.reply("There is already a giveaway registered for this server");
+            return;
+        }
+
         const giveawayConfig: IGiveawayArguments = {
             title: args[0],
             description: args[1],
