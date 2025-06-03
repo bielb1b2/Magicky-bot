@@ -8,6 +8,6 @@ const commands: ICommands[] = [];
 commands.push(giveawayCommand);
 commands.push(ping)
 
-console.log("Commands Loaded", commands.map(command => command.name).join(", "));
+console.log("Commands Loaded: ", commands.map(command => command.name).join(", "));
 
 export { commands };

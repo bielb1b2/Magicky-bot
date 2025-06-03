@@ -1,11 +1,10 @@
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from "@discordjs/builders";
-import { ButtonStyle, Events, MessageFlags } from "discord.js";
+import { ButtonStyle } from "discord.js";
 import { z } from "zod";
 import { DateTime } from "luxon";
 
 import { ICommands } from "../../interface/ICommands";
 import { registeredDraws } from "./registered-draws";
-import { client } from "../../clientconfig";
 import { messageEmbedError } from "./errors/invalidArgs.error";
 
 interface IGiveawayArguments {
@@ -26,10 +25,11 @@ const giveawaySchema = z.object({
     hourOfExecute: z.string(),
 });
 
-export const giveawayCommand = {
+export const giveawayCommand: ICommands = {
     name: "giveaway",
     description: "giveaway!",
-    howUse: "!giveaway <title> <description> <winners> <dayOfExecute> <monthOfExecute> <hourOfExecute>",
+    howUse: "!giveaway `<title>` `<description>` `<winners>` `<dayOfExecute>` `<monthOfExecute>` `<hourOfExecute>`",
+    example: "!giveaway \"Game Giveaway\" \"Participate to win a game!\" 1 15 10 14",
     async execute(interaction, args) {
         if(!args) {
             interaction.reply("This command need arguments")
@@ -103,4 +103,4 @@ export const giveawayCommand = {
             }
         })
     }
-} as ICommands;
+}

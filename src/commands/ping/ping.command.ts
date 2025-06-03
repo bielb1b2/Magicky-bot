@@ -1,11 +1,12 @@
 import { Colors, EmbedBuilder } from "discord.js";
 import { ICommands } from "../../interface/ICommands";
 
-const ping = {
+const ping: ICommands = {
     name: "ping",
     description: "Ping!",
     howUse: "!ping",
-    execute(interaction) {
+    example: "!ping",
+    async execute(interaction) {
         
         const diffTime = interaction.createdTimestamp - Date.now();
 
@@ -17,6 +18,6 @@ const ping = {
 
         interaction.reply({ embeds: [message] });
     },
-} as ICommands;
+}
 
 export { ping };
