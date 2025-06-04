@@ -1,9 +1,10 @@
-import { Client, Events, GatewayIntentBits } from "discord.js"
+import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js"
 
 import CONFIGBOT from "./config/configbot.json";
-import { commands } from "./commands/initCommands";
-import { infoCommand } from "./commands/info/info.command";
-import { cronGiveAway } from "./commands/giveaway/giveaway.service";
+import { commands } from "./tokencommands/initCommands";
+import { infoCommand } from "./tokencommands/info/info.command";
+import { cronGiveAway } from "./tokencommands/giveaway/giveaway.service";
+import { slashCommands } from "./commands/loadCommands";
 
 const client = new Client({ 
 	intents: [
@@ -14,8 +15,17 @@ const client = new Client({
 	],
 });
 
+const rest = new REST();
+
 client.on(Events.ClientReady, async readyClients => {
     console.log(`Logged in as ${readyClients.user.tag}!`);
+
+    console.log("Slash Commands Loaded: ", slashCommands.map(command => command.data.name).join(", "));
+
+    await rest.put(
+        Routes.applicationCommands("1338318534660329552"),
+        { body: slashCommands.map(command => command.data) }
+    );
 
     setInterval(async () => {
         await cronGiveAway();
@@ -48,4 +58,22 @@ client.on(Events.MessageCreate, async interaction => {
     }
 })
 
-export { client }
+
+client.on(Events.InteractionCreate, async interaction => {
+    try {
+        if(!interaction.isChatInputCommand()) return;
+        if(interaction.user.bot) return;
+
+        const command = slashCommands.find(cmd => cmd.data.name === interaction.commandName);
+        if(!command) {
+            await interaction.reply({ content: "Command not found!", ephemeral: true });
+            return;
+        }
+        await command.execute(interaction);
+    } catch (error) {
+        console.error("Error executing slash command:", error);
+    }
+})
+
+
+export { client, rest }

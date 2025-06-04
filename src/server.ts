@@ -1,7 +1,7 @@
 import { env } from "./env/index";
-import { client } from "./clientconfig";
+import { client, rest } from "./clientconfig";
 
-import "../src/commands/giveaway/giveaway.client";
+import "./tokencommands/giveaway/giveaway.client";
 
 if(env.error) {
     env.error.errors.forEach(item => {
@@ -11,4 +11,5 @@ if(env.error) {
     throw new Error("Stop Bot!")
 }
 
-client.login(env.data.DISCORD_TOKEN)
+rest.setToken(env.data.DISCORD_TOKEN);
+client.login(env.data.DISCORD_TOKEN);

@@ -26,7 +26,8 @@ export const infoCommand = {
                     .addFields(
                         { name: "Description", value: command.description },
                         { name: "How to use", value: command.howUse },
-                        { name: "Example", value: command.example }
+                        { name: "Example", value: command.example },
+                        { name: "Rate Limit", value: `${command.rateLimit.toString()}sec` }
                     );
 
                 interaction.reply({ embeds: [embedMessage] });
