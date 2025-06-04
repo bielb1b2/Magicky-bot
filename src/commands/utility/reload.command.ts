@@ -8,7 +8,6 @@ const reloadCommand: ISlashCommand = {
         .setName("reload-commands")
         .setDescription("Restarts the bot and reloads all commands."),
     async execute(interaction) {
-        console.log("Commands:", interaction.toJSON())
         await rest.put(
             Routes.applicationCommands("1338318534660329552"),
             { body: slashCommands.map(command => command.data) }

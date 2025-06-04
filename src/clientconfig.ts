@@ -3,7 +3,7 @@ import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js"
 import CONFIGBOT from "./config/configbot.json";
 import { commands } from "./tokencommands/initCommands";
 import { infoCommand } from "./tokencommands/info/info.command";
-import { cronGiveAway } from "./tokencommands/giveaway/giveaway.service";
+import { cronGiveAway } from "./commands/giveaway/giveaway.service";
 import { slashCommands } from "./commands/loadCommands";
 
 const client = new Client({ 

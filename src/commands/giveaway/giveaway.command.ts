@@ -1,5 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { DateTime } from "luxon";
+
 import { ISlashCommand } from "../ISlashCommand";
+import { registeredDraws } from "./registered-draws";
 
 const giveawayCommand: ISlashCommand = {
     data: new SlashCommandBuilder()
@@ -38,9 +41,61 @@ const giveawayCommand: ISlashCommand = {
                 .setMinValue(0)
                 .setMaxValue(23)),
     async execute(interaction) {
-        console.log("Giveaway command executed:", interaction.toJSON());
+        const executionDate = DateTime.fromObject({
+            year: DateTime.now().year,
+            day: interaction.options.getInteger("day_of_execute")!,
+            month: interaction.options.getInteger("month_of_execute")!,
+            hour: interaction.options.getInteger("hour_of_execute")!,
+        })
 
-       interaction.reply("This command is not implemented yet. Please check back later!");
+        if(executionDate < DateTime.now().setZone("America/Sao_Paulo").set({ minute: 0, second: 0, millisecond: 0 }) || !executionDate.isValid) {
+            await interaction.reply("The execution date is invalid. Please ensure it is in the future and correctly formatted.");
+            return;
+        }
+
+        const joinButton = new ButtonBuilder()
+            .setCustomId("giveaway-button")
+            .setLabel("Participate")
+            .setStyle(ButtonStyle.Primary)
+        
+        const row = new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(joinButton);
+        
+        const title = interaction.options.getString("title")!;
+        const description = interaction.options.getString("description")!;
+        const winners = interaction.options.getInteger("winners")!;
+
+        const message = new EmbedBuilder()
+            .setTitle(title)
+            .setDescription(description)
+            .addFields([
+                { name: "Winners", value: winners.toString(), inline: true },
+                { name: "Execution Date", value: executionDate.toISODate(), inline: true },
+            ])
+
+        const reply = await interaction.reply({
+            embeds: [message],
+            components: [row],
+        })
+
+        registeredDraws.push({
+            id: reply.id,
+            guildInfo: {
+                guildId: interaction.guild!.id,
+                messageId: interaction.id,
+                channelId: interaction.channelId,
+            },
+            giveawayInfo: {
+                title: title,
+                description: description,
+                winners: winners.toString(),
+                executionDate: executionDate.toISO(),
+                participants: [],
+            }
+        })
+
+        console.log("Interaction registered", reply.id);
+
     }
 }
 
