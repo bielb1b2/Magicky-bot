@@ -7,13 +7,6 @@ client.on(Events.InteractionCreate, async interaction => {
 
     if (interaction.customId === "giveaway-button") {
         const userId = interaction.user.id;
-
-
-        console.log("Interaction Botton", interaction.toJSON());
-
-        // console.log("Registereds", registeredDraws);
-        // console.log("Message ID", interaction.message.id);
-
         const giveaway = registeredDraws.find(draw => draw.id === interaction.message.id);
         if(!giveaway) {
             await interaction.reply({ content: "Giveaway not found!!!", flags: MessageFlags.Ephemeral  })

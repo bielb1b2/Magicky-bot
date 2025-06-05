@@ -76,10 +76,11 @@ const giveawayCommand: ISlashCommand = {
         const reply = await interaction.reply({
             embeds: [message],
             components: [row],
+            withResponse: true
         })
 
         registeredDraws.push({
-            id: reply.id,
+            id: reply.interaction.responseMessageId!,
             guildInfo: {
                 guildId: interaction.guild!.id,
                 messageId: interaction.id,
@@ -93,9 +94,6 @@ const giveawayCommand: ISlashCommand = {
                 participants: [],
             }
         })
-
-        console.log("Interaction registered", reply.id);
-
     }
 }
 
