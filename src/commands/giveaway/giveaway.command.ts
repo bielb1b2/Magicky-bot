@@ -57,9 +57,15 @@ const giveawayCommand: ISlashCommand = {
             .setCustomId("giveaway-button")
             .setLabel("Participate")
             .setStyle(ButtonStyle.Primary)
+
+        const runGiveawayButton = new ButtonBuilder()
+            .setCustomId("run-giveaway-button")
+            .setLabel("Run Giveaway")
+            .setStyle(ButtonStyle.Success)
         
         const row = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(joinButton);
+            .addComponents(joinButton)
+            .addComponents(runGiveawayButton);
         
         const title = interaction.options.getString("title")!;
         const description = interaction.options.getString("description")!;
@@ -94,6 +100,7 @@ const giveawayCommand: ISlashCommand = {
                 participants: [],
             }
         })
+
     }
 }
 

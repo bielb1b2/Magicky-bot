@@ -1,7 +1,7 @@
 import { env } from "./env/index";
 import { client, rest } from "./clientconfig";
 
-import "./commands/giveaway/giveaway.client";
+import "./commands/giveaway/giveawaycontrol.client";
 
 if(env.error) {
     env.error.errors.forEach(item => {

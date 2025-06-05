@@ -25,8 +25,7 @@ client.on(Events.InteractionCreate, async interaction => {
             .setStyle(ButtonStyle.Primary)
 
         const row = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(joinButtonUpdated);
-
+            .addComponents(joinButtonUpdated)
 
         giveaway.giveawayInfo.participants.push(userId);
 
