@@ -24,8 +24,14 @@ client.on(Events.InteractionCreate, async interaction => {
             .setLabel(`Participate (${giveaway.giveawayInfo.participants.length + 1})`)
             .setStyle(ButtonStyle.Primary)
 
+        const runGiveawayButton = new ButtonBuilder()
+            .setCustomId("run-giveaway-button")
+            .setLabel("Run Giveaway")
+            .setStyle(ButtonStyle.Success)
+
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(joinButtonUpdated)
+            .addComponents(runGiveawayButton);
 
         giveaway.giveawayInfo.participants.push(userId);
 
