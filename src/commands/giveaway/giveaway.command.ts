@@ -46,7 +46,7 @@ const giveawayCommand: ISlashCommand = {
             day: interaction.options.getInteger("day_of_execute")!,
             month: interaction.options.getInteger("month_of_execute")!,
             hour: interaction.options.getInteger("hour_of_execute")!,
-        })
+        }, { zone: "America/Sao_Paulo" });
 
         if(executionDate < DateTime.now().setZone("America/Sao_Paulo").set({ minute: 0, second: 0, millisecond: 0 }) || !executionDate.isValid) {
             await interaction.reply("The execution date is invalid. Please ensure it is in the future and correctly formatted.");
