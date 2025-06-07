@@ -37,9 +37,20 @@ export async function endGiveaway(draw: IRegisteredDraws) {
                 )
             })
 
-            channel.send({
+            await channel.send({
                 embeds: [winnerEmbed]
             });
+
+            await channel.messages.fetch(draw.guildInfo.messageId)
+                .then(message => {
+                    const updatedEmbed = new EmbedBuilder()
+                        .setColor("#FF0000")
+                        .setDescription("Giveaway ended!")
+                        .setFooter({ text: "Thank you for participating!" });
+
+                    message.edit({ embeds: [updatedEmbed], components: [] });
+                }
+            )
         }
     } else {
         const channel = client.channels.cache.get(draw.guildInfo.channelId) as TextChannel;

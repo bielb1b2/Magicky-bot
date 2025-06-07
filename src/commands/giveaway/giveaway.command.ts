@@ -89,7 +89,7 @@ const giveawayCommand: ISlashCommand = {
             id: reply.interaction.responseMessageId!,
             guildInfo: {
                 guildId: interaction.guild!.id,
-                messageId: interaction.id,
+                messageId: reply.interaction.responseMessageId!,
                 channelId: interaction.channelId,
             },
             giveawayInfo: {
