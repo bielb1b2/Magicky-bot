@@ -1,5 +1,5 @@
-import { env } from "./env/index";
 import { client, rest } from "./clientconfig";
+import { env } from "./env/index";
 
 import "./commands/giveaway/giveawaycontrol.client";
 import "./commands/giveaway/giveawayplay.client";
