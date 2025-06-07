@@ -1,12 +1,24 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from "discord.js";
 import { client } from "../../clientconfig";
-import { cronGiveAway } from "./giveaway.service";
+import { endGiveaway } from "./giveaway.service";
+import { gamesOfTheDay, registeredDraws } from "./registered-draws";
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;
-
     if (interaction.customId === "run-giveaway-button") {
-        cronGiveAway();
+        const selectedGame = registeredDraws.find(item => item.id === interaction.message.id); 
+        const isInGamesOfTheDay = gamesOfTheDay.findIndex(item => item.id === interaction.message.id);
+        if (!selectedGame) {
+            await interaction.reply({ content: "Giveaway not found!!!", ephemeral: true });
+            return;
+        }
+        if(isInGamesOfTheDay !== -1) {
+            gamesOfTheDay.splice(isInGamesOfTheDay, 1);
+        }
+        
+        registeredDraws.splice(registeredDraws.indexOf(selectedGame), 1);
+
+        endGiveaway(selectedGame);
 
         const runGiveawayButton = new ButtonBuilder()
             .setCustomId("run-giveaway-button")
