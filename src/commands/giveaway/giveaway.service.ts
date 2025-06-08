@@ -22,7 +22,7 @@ export async function endGiveaway(draw: IRegisteredDraws) {
         if (channel) {
             const winnerEmbed = new EmbedBuilder()
                 .setColor("#7FDFFF")
-                .setTitle(draw.giveawayInfo.title)
+                .setTitle(`${draw.giveawayInfo.title} 🎉`)
                 .setDescription(draw.giveawayInfo.description)
                 .setThumbnail(configBot.urlPhoto)
                 .addFields(
