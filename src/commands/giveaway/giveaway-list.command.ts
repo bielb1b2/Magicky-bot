@@ -1,4 +1,4 @@
-import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { Colors, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ISlashCommand } from "../ISlashCommand";
 import { registeredDraws } from "./registered-draws";
 
@@ -16,11 +16,12 @@ const giveawayListCommand: ISlashCommand = {
         const embedMessage = new EmbedBuilder()
             .setTitle(`All giveaways: ${interaction.guild?.name}`)
             .setDescription("Show all giveaways that was not played in server yet")
+            .setColor(Colors.Aqua)
 
 
-        allDraws.forEach((item) => {
+        allDraws.forEach((item, index) => {
             embedMessage.addFields(
-                { name: item.giveawayInfo.title, value: item.giveawayInfo.description }
+                { name: `#${index++} ${item.giveawayInfo.title}`, value: item.giveawayInfo.description }
             )
         })
 

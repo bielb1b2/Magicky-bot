@@ -11,6 +11,7 @@ export async function cronGiveAway() {
 
         if(executionDate.equals(now)) {
             gamesOfTheDay.push(item);
+            registeredDraws.splice(registeredDraws.indexOf(item), 1);
         }
     })
 
@@ -21,6 +22,7 @@ export async function cronGiveAway() {
     gamesOfTheDay.forEach((item) => {
         endGiveaway(item);
     });
+
 
     gamesOfTheDay.length = 0;
 }
