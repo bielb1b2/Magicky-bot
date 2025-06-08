@@ -58,8 +58,6 @@ export async function endGiveaway(draw: IRegisteredDraws) {
             channel.send(`No participants for giveaway: "${draw.giveawayInfo.title}"!`);
         }
     }
-
-    return;
 }
 
 function getRandomElement<T>(array: T[]): T {

@@ -15,4 +15,3 @@ export interface IRegisteredDraws {
 }
 
 export const registeredDraws: IRegisteredDraws[] = []
-export const gamesOfTheDay: IRegisteredDraws[] = [];
