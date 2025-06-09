@@ -10,7 +10,7 @@ export function cronGiveAway() {
 
     const now = DateTime.fromISO(DateTime.now().set({ minute: 0, second: 0, millisecond: 0 }).setZone("America/Sao_Paulo").toString());
 
-    for (let index = 0; index < registeredDraws.length; index++) {
+    for (let index = registeredDraws.length - 1; index >= 0; index--) {
         const item = registeredDraws[index];
         const executionDate = DateTime.fromISO(item.giveawayInfo.executionDate).set({ minute: 0, second: 0, millisecond: 0 });
         console.log(`${index}`, DateTime.now())
@@ -18,8 +18,6 @@ export function cronGiveAway() {
             endGiveaway(item);
             registeredDraws.splice(registeredDraws.indexOf(item), 1);
         }
-        return;
     }
 
-    return;
 }
