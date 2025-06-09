@@ -19,14 +19,14 @@ client.on(Events.ClientReady, async readyClients => {
 
     console.log("Slash Commands Loaded: ", slashCommands.map(command => command.data.name).join(", "));
 
+    setInterval(() => {
+        cronGiveAway();
+    }, 1000 * 30);
+
     await rest.put(
         Routes.applicationCommands("1338318534660329552"),
         { body: slashCommands.map(command => command.data) }
     );
-
-    setInterval(async () => {
-        await cronGiveAway();
-    }, 1000 * 60);
 })
 
 

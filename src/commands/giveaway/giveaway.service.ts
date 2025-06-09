@@ -51,12 +51,16 @@ export async function endGiveaway(draw: IRegisteredDraws) {
                     message.edit({ embeds: [updatedEmbed], components: [] });
                 }
             )
+
+            return;
         }
     } else {
         const channel = client.channels.cache.get(draw.guildInfo.channelId) as TextChannel;
         if (channel) {
             channel.send(`No participants for giveaway: "${draw.giveawayInfo.title}"!`);
         }
+
+        return;
     }
 }
 
