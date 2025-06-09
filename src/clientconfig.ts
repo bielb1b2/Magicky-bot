@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js"
+import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js";
 
 import { cronGiveAway } from "./commands/giveaway/giveaway.cron";
 import { slashCommands } from "./commands/loadCommands";
@@ -21,7 +21,7 @@ client.on(Events.ClientReady, async readyClients => {
 
     setInterval(() => {
         cronGiveAway();
-    }, 1000 * 30);
+    }, 1000 * 60); // Every minute
 
     await rest.put(
         Routes.applicationCommands("1338318534660329552"),
@@ -47,4 +47,4 @@ client.on(Events.InteractionCreate, async interaction => {
 })
 
 
-export { client, rest }
+export { client, rest };

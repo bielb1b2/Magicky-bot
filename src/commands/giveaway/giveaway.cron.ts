@@ -10,14 +10,16 @@ export function cronGiveAway() {
 
     const now = DateTime.fromISO(DateTime.now().set({ minute: 0, second: 0, millisecond: 0 }).setZone("America/Sao_Paulo").toString());
 
-    for (let index = registeredDraws.length - 1; index >= 0; index--) {
-        const item = registeredDraws[index];
+    const toExecute = registeredDraws.filter(item => {
         const executionDate = DateTime.fromISO(item.giveawayInfo.executionDate).set({ minute: 0, second: 0, millisecond: 0 });
-        console.log(`${index}`, DateTime.now())
-        if(executionDate.equals(now)) {
-            endGiveaway(item);
-            registeredDraws.splice(registeredDraws.indexOf(item), 1);
-        }
+        return executionDate.equals(now);
+    });
+
+    toExecute.forEach(item => endGiveaway(item));
+
+    for (const item of toExecute) {
+        const idx = registeredDraws.indexOf(item);
+        if (idx !== -1) registeredDraws.splice(idx, 1);
     }
 
 }
