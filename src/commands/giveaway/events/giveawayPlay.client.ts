@@ -8,7 +8,7 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.customId === "run-giveaway-button") {
         const selectedGame = registeredDraws.find(item => item.id === interaction.message.id); 
         if (!selectedGame) {
-            await interaction.reply({ content: "Giveaway not found!!!", ephemeral: true });
+            await interaction.reply({ content: "Giveaway not found!!!", options: { ephemeral: true } });
             return;
         }
         registeredDraws.splice(registeredDraws.indexOf(selectedGame), 1);

@@ -2,5 +2,6 @@ import { CacheType, ChatInputCommandInteraction, SlashCommandBuilder, SlashComma
 
 export interface ISlashCommand {
     data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder;
+    serverOnly?: boolean;
     execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<void>;
 }

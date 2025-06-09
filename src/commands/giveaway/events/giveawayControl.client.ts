@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events, MessageFlags } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from "discord.js";
 import { client } from "../../../clientconfig";
 import { registeredDraws } from "../repositorys/registered-draws";
 
@@ -9,13 +9,13 @@ client.on(Events.InteractionCreate, async interaction => {
         const userId = interaction.user.id;
         const giveaway = registeredDraws.find(draw => draw.id === interaction.message.id);
         if(!giveaway) {
-            await interaction.reply({ content: "Giveaway not found!!!", flags: MessageFlags.Ephemeral  })
+            await interaction.reply({ content: "Giveaway not found!!!", options: { ephemeral: true } });
             return;
         }
 
         const userIsAlreadyInEvent = giveaway.giveawayInfo.participants.find(item => item === userId);
         if(userIsAlreadyInEvent) {
-            await interaction.reply({ content: "You're already in event", flags: MessageFlags.Ephemeral  })
+            await interaction.reply({ content: "You're already in event", options: { ephemeral: true } })
             return;
         }
 
@@ -36,6 +36,6 @@ client.on(Events.InteractionCreate, async interaction => {
         giveaway.giveawayInfo.participants.push(userId);
 
         await interaction.message.edit({ components: [row] })
-        await interaction.reply({ content: "Now you are in the event", flags: MessageFlags.Ephemeral });
+        await interaction.reply({ content: "Now you are in the event", options: { ephemeral: true }});
     }
 })

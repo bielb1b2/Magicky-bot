@@ -37,7 +37,11 @@ client.on(Events.InteractionCreate, async interaction => {
 
         const command = slashCommands.find(cmd => cmd.data.name === interaction.commandName);
         if(!command) {
-            await interaction.reply({ content: "Command not found!", ephemeral: true });
+            await interaction.reply({ content: "Command not found!", options: { ephemeral: true } });
+            return;
+        }
+        if(command.serverOnly) {
+            await interaction.reply({ content: "This command can only be used in a server.", options: { ephemeral: true } });
             return;
         }
         await command.execute(interaction);

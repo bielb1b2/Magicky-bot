@@ -6,7 +6,7 @@ import { registeredDraws } from "../repositorys/registered-draws";
 
 const giveawayCommand: ISlashCommand = {
     data: new SlashCommandBuilder()
-        .setName("giveaway")
+        .setName("giveaway-create")
         .setDescription("Start a giveaway")
         .addStringOption(option =>
             option.setName("title")
@@ -40,7 +40,17 @@ const giveawayCommand: ISlashCommand = {
                 .setRequired(true)
                 .setMinValue(0)
                 .setMaxValue(23)),
+    serverOnly: true,
     async execute(interaction) {
+        if(!interaction.guild) {
+            await interaction.reply("This command can only be used in a server.");
+            return;
+        }
+        if(registeredDraws.some(draw => draw.guildInfo.guildId === interaction.guildId)) {
+            await interaction.reply("There is already a giveaway running in this server.");
+            return;
+        }
+
         const executionDate = DateTime.fromObject({
             year: DateTime.now().year,
             day: interaction.options.getInteger("day_of_execute")!,
