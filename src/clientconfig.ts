@@ -1,6 +1,6 @@
 import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js";
 
-import { cronGiveAway } from "./commands/giveaway/giveaway.cron";
+import { cronGiveAway } from "./commands/giveaway/services/giveaway.cron";
 import { slashCommands } from "./commands/loadCommands";
 
 const client = new Client({ 

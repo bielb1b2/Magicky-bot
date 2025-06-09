@@ -1,7 +1,7 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from "discord.js";
 import { client } from "../../../clientconfig";
-import { endGiveaway } from "../giveaway.service";
 import { registeredDraws } from "../repositorys/registered-draws";
+import { endGiveaway } from "../services/giveaway.service";
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;

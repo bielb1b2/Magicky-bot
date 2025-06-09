@@ -1,9 +1,9 @@
 import { EmbedBuilder, TextChannel } from "discord.js";
 import { DateTime } from "luxon";
 
-import { client } from "../../clientconfig";
-import configBot from "../../config/configbot.json";
-import { IRegisteredDraws } from "./repositorys/registered-draws";
+import { client } from "../../../clientconfig";
+import configBot from "../../../config/configbot.json";
+import { IRegisteredDraws } from "../repositorys/registered-draws";
 
 export async function endGiveaway(draw: IRegisteredDraws) {
     const winners: string[] = [];
