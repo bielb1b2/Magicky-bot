@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 
 import { client } from "../../clientconfig";
 import configBot from "../../config/configbot.json";
-import { IRegisteredDraws } from "./registered-draws";
+import { IRegisteredDraws } from "./repositorys/registered-draws";
 
 export async function endGiveaway(draw: IRegisteredDraws) {
     const winners: string[] = [];

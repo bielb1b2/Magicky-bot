@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events, MessageFlags } from "discord.js";
-import { client } from "../../clientconfig";
-import { registeredDraws } from "./registered-draws";
+import { client } from "../../../clientconfig";
+import { registeredDraws } from "../repositorys/registered-draws";
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;

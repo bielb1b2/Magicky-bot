@@ -1,8 +1,8 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { DateTime } from "luxon";
 
-import { ISlashCommand } from "../ISlashCommand";
-import { registeredDraws } from "./registered-draws";
+import { ISlashCommand } from "../../ISlashCommand";
+import { registeredDraws } from "../repositorys/registered-draws";
 
 const giveawayCommand: ISlashCommand = {
     data: new SlashCommandBuilder()
