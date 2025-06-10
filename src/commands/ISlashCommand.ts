@@ -3,5 +3,6 @@ import { CacheType, ChatInputCommandInteraction, SlashCommandBuilder, SlashComma
 export interface ISlashCommand {
     data: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandOptionsOnlyBuilder;
     serverOnly?: boolean;
+    cooldown?: number;
     execute(interaction: ChatInputCommandInteraction<CacheType>): Promise<void>;
 }
