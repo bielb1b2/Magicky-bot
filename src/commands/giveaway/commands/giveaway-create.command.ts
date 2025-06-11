@@ -72,10 +72,16 @@ const giveawayCommand: ISlashCommand = {
             .setCustomId("run-giveaway-button")
             .setLabel("Run Giveaway")
             .setStyle(ButtonStyle.Success)
+
+        const deleteButton = new ButtonBuilder()
+            .setCustomId("delete-giveaway-button")
+            .setLabel("Delete Giveaway")
+            .setStyle(ButtonStyle.Danger)
         
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(joinButton)
-            .addComponents(runGiveawayButton);
+            .addComponents(runGiveawayButton)
+            .addComponents(deleteButton);
         
         const title = interaction.options.getString("title")!;
         const description = interaction.options.getString("description")!;
