@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from "discord.js";
+import { Events } from "discord.js";
 import { client } from "../../../clientconfig";
 import { registeredDraws } from "../repositorys/registered-draws";
 import { endGiveaway } from "../services/giveaway.service";
@@ -14,17 +14,5 @@ client.on(Events.InteractionCreate, async interaction => {
         registeredDraws.splice(registeredDraws.indexOf(selectedGame), 1);
 
         endGiveaway(selectedGame);
-
-        const runGiveawayButton = new ButtonBuilder()
-            .setCustomId("run-giveaway-button")
-            .setLabel("Giveaway is ended")
-            .setEmoji("🎉")
-            .setStyle(ButtonStyle.Success)
-            .setDisabled(true);
-
-        const row = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(runGiveawayButton);
-
-        await interaction.message.edit({ components: [row] });
     }
 })

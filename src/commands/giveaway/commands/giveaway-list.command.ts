@@ -7,7 +7,6 @@ const giveawayListCommand: ISlashCommand = {
         .setName("giveaway-list")
         .setDescription("List all giveaways"),
     serverOnly: true,
-    cooldown: 5,
     async execute(interaction) {
         const allDraws = registeredDraws.filter(item => item.guildInfo.guildId === interaction.guildId);
 
