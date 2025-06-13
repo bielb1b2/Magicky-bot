@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Events } from "discord.js";
 import { client } from "../../../clientconfig";
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;
@@ -29,9 +29,15 @@ client.on(Events.InteractionCreate, async interaction => {
             .setLabel("Run Giveaway")
             .setStyle(ButtonStyle.Success)
 
+        const deleteButton = new ButtonBuilder()
+            .setCustomId("delete-giveaway-button")
+            .setLabel("Delete Giveaway")
+            .setStyle(ButtonStyle.Danger)
+
         const row = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(joinButtonUpdated)
-            .addComponents(runGiveawayButton);
+            .addComponents(runGiveawayButton)
+            .addComponents(deleteButton);
 
         giveaway.giveawayInfo.participants.push(userId);
 

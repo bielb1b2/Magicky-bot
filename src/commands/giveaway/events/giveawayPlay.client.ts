@@ -1,6 +1,6 @@
 import { Events } from "discord.js";
 import { client } from "../../../clientconfig";
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 import { endGiveaway } from "../services/giveaway.service";
 
 client.on(Events.InteractionCreate, async interaction => {

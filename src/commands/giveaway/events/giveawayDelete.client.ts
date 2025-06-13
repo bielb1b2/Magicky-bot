@@ -1,6 +1,6 @@
 import { EmbedBuilder, Events, TextChannel } from "discord.js";
 import { client } from "../../../clientconfig";
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isButton()) return;

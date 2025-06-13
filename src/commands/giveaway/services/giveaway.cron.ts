@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 import { endGiveaway } from "./giveaway.service";
 
 export function cronGiveAway() {

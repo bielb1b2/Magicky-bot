@@ -1,6 +1,6 @@
 import { Colors, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { ISlashCommand } from "../../ISlashCommand";
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 
 const giveawayListCommand: ISlashCommand = {
     data: new SlashCommandBuilder()

@@ -2,7 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, SlashComman
 import { DateTime } from "luxon";
 
 import { ISlashCommand } from "../../ISlashCommand";
-import { registeredDraws } from "../repositorys/registered-draws";
+import { registeredDraws } from "../repositories/registered-draws";
 
 const giveawayCommand: ISlashCommand = {
     data: new SlashCommandBuilder()
